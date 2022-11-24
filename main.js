@@ -14,23 +14,23 @@ let pokemons = [
  
 //1. Ordernar los pokemons por base_damage de menor a mayor.
 
-// pokemons.sort(function(a,b) {a.base_damage - b.base_damage})
+pokemons.sort(function(a,b) {a.base_damage - b.base_damage})
 
-// console.log(pokemons)
+console.log(pokemons)
 
 
 //2. Crear una funcion para ordernar los pokemons dependiendo de el argumento que se ingrese en la funcion. Pueden ingresar: type, base_damage, base_hp o speed.
  
-// function sortPokemons(argument){
-//     let validInput = ["type.","base_damage","base_hp","speed" ]
-//         if (validInput.includes(argument)){
-//         console.log(pokemons.sort((a,b)=> a[argument] - b[argument]))
+function sortPokemons(argument){
+    let validInput = ["type.","base_damage","base_hp","speed" ]
+        if (validInput.includes(argument)){
+        console.log(pokemons.sort((a,b)=> a[argument] - b[argument]))
          
-//     }
-//     else {
-//     console.log("Debe ingresarun dato valido")
-// }
-// }
+    }
+    else {
+    console.log("Debe ingresarun dato valido")
+}
+}
 // //3. Crear una funcion que filtre el objeto pokemons y devuelva un arreglo con los pokemons filtrados. La funcion debe aceptar un argumento para filtrar por type de pokemon.
 //  function filterPokemons(argument){
 //     let filteredPokemons = pokemon.filter(pokemon => pokemon.type === argument)
@@ -82,18 +82,18 @@ let pokemons = [
 //7. Crear una funcion que determine el daño que hara un pokemon elegido de la lista ante una posible pelea, para ello considerar que el daño que hara el pokemon es:
 // daño = base_damage + un valor aleatorio entre el min_damage y el max_damage
  
-// function setDamage(index){
-//     if(index < pokemons.length){
-//     addAtributes()
-//     let selectedPokemon = pokemons [index]
-//     let total_damage = selectedPokemon.base_damage + Math.floor(Math.random()* (electedPokemon.max_damage-1 + selectedPokemon.min_damage)+ selectedPokemon.min_damage)
-//     console.log(total_damage)
-// }    
-//     else {
-//         console.log(`Por favor presione un numerono ntan grande ${pokemons.length - 1}`)
+function setDamage(index){
+    if(index < pokemons.length){
+    addAtributes()
+    let selectedPokemon = pokemons [index]
+    let total_damage = selectedPokemon.base_damage + Math.floor(Math.random()* (electedPokemon.max_damage-1 + selectedPokemon.min_damage)+ selectedPokemon.min_damage)
+    console.log(total_damage)
+}    
+    else {
+        console.log(`Por favor presione un numerono ntan grande ${pokemons.length - 1}`)
 
-//     }
-// }
+    }
+}
 
 
 
@@ -117,4 +117,60 @@ function addAtributes()
 
 }
 
+
+//9. Crear una lista desordenada de Pokemons en nuestro documento HTML
+// const root = document.getElementById("root")
+// const ol = document.createElement('ol')
+// root.append(ol)
+
+// pokemons.forEach(pokemon => {
+//     const li = document.createElement('li')
+//     li.textContent = pokemon.name
+//     li.addEventListener("click", () => setDamage(1))
+//     ol.append(li)
+// })
+
+//10. Utilizando javascript crear una tabla de pokemons con las siguientes columnas: id, name, type, base_damage, base_hp, speed
+const root = document.getElementById("root")
+const table = document.createElement("table")
+root.append(table)
+
+const tr = document.createElement("tr")
+table.append(tr)
+
+//HEADERS
+
+for(const property in pokemons[0]){
+    const th = document.createElement("th")
+    th.textContent = property
+    th.style.cursor = "pointer"
+    th.addEventListener("click", (e) => {
+        e.preventDefault()
+        sortPokemons(property)
+        table.innerHTML = ""
+        table.append(tr)
+        renderBody()
+    })
+    tr.append(th)
+}
+
+//TABLE BODY
+function renderBody(){
+    for(let i=0; i<pokemons.length; i++){
+        const trb = document.createElement("tr")
+        const values = Object.values(pokemons[i])
+   
+        for(let j=0; j<values.length; j++){
+            const tdb = document.createElement("td")
+            tdb.textContent = values[j]
+            trb.append(tdb)
+        }
+        table.append(trb)
+    }
+}
+
+
+//11. Utilizando javascript modifica el codigo creado en el ejecicio anterior y agrega un evento que permita ordenar los pokemons haciendo click en sus encabezados.
+
+//12. Corrige la function sortPokemons para que acepte ordenarlos segun id y name.
 
